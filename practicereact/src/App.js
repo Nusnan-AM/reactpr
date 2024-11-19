@@ -1,3 +1,4 @@
+import AddItem from './AddItem';
 import Content from './Content';
 import Footer from './Footer';
 import Header from './Header';
@@ -36,10 +37,31 @@ function App() {
     setItems(listItems)
     localStorage.setItem("todo_list",JSON.stringify(listItems))
   }
+  const [newItem, setnewItem] = useState('');
+  const addItem =(item) => {
+    const id =items.length? items[items.length -1].id + 1 :1;
+    const addNewItem ={id,checked:false, item}
+    const listItems =[...items, addNewItem]
+    setItems(listItems)
+    localStorage.setItem("todo_list",JSON.stringify(listItems))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(!newItem) return;
+    console.log(newItem)
+    addItem(newItem)
+    setnewItem('')
+  }
 
   return (
     <div className="App">
             <Header title="My To do"/>
+            <AddItem 
+            newItem = {newItem}
+            setnewItem ={setnewItem}
+            handleSubmit ={handleSubmit}
+            />
             <Content
             items ={items}
             handleCheck ={handleCheck}
