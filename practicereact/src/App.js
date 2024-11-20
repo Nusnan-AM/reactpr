@@ -3,26 +3,15 @@ import Content from './Content';
 import Footer from './Footer';
 import Header from './Header';
 import { useState } from 'react'
+import SearchItem from './SearchItem';
 
 function App() {
 
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      checked: true,
-      item: 'Practice coding'
-    },
-    {
-      id: 2,
-      checked: false,
-      item: 'Play Cricket'
-    },
-    {
-      id: 3,
-      checked: false,
-      item: 'Read about AI'
-    }
-  ]);
+  const [items, setItems] = useState(
+    JSON.parse(localStorage.getItem('todo_list'))
+  );
+
+  const [search,setSearch] = useState('')
 
   const handleCheck = (id) => {
     const listItems =items.map(
@@ -62,8 +51,12 @@ function App() {
             setnewItem ={setnewItem}
             handleSubmit ={handleSubmit}
             />
+            <SearchItem
+            search ={search}
+            setSearch={setSearch}
+            />
             <Content
-            items ={items}
+            items ={items .filter(item => (item.item).toLowerCase().includes(search.toLowerCase()))}
             handleCheck ={handleCheck}
             handleDelete ={handleDelete}
             />
